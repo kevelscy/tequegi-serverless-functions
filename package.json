@@ -6,9 +6,11 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "lint:eslint": "eslint ./src --fix"
   },
   "dependencies": {
+    "cloudinary": "^1.32.0",
     "formidable": "^2.0.1",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.6.1",

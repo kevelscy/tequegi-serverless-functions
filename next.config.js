@@ -2,13 +2,13 @@
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
-  async redirects() {
+  async redirects () {
     return [
       {
         source: '/',
         destination: '/api',
-        permanent: true,
-      },
+        permanent: true
+      }
     ]
   }
 }
