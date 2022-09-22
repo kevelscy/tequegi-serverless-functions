@@ -1,12 +1,15 @@
 lockfileVersion: 5.4
 
 specifiers:
+  '@types/bcryptjs': ^2.4.2
   '@types/formidable': ^2.0.5
   '@types/jsonwebtoken': ^8.5.9
+  '@types/jwt-decode': ^3.1.0
   '@types/node': 18.7.18
   '@types/react': 18.0.20
   '@types/react-dom': 18.0.6
   '@typescript-eslint/eslint-plugin': ^5.0.0
+  bcryptjs: ^2.4.3
   cloudinary: ^1.32.0
   eslint: ^8.0.1
   eslint-config-next: 12.3.1
@@ -17,6 +20,7 @@ specifiers:
   eslint-plugin-react: ^7.31.8
   formidable: ^2.0.1
   jsonwebtoken: ^8.5.1
+  jwt-decode: ^3.1.2
   mongoose: ^6.6.1
   next: 12.3.1
   react: 18.2.0
@@ -24,17 +28,21 @@ specifiers:
   typescript: '*'
 
 dependencies:
+  bcryptjs: 2.4.3
   cloudinary: 1.32.0
   formidable: 2.0.1
   jsonwebtoken: 8.5.1
+  jwt-decode: 3.1.2
   mongoose: 6.6.1
   next: 12.3.1_biqbaboplfbrettd7655fr4n2y
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
 
 devDependencies:
+  '@types/bcryptjs': 2.4.2
   '@types/formidable': 2.0.5
   '@types/jsonwebtoken': 8.5.9
+  '@types/jwt-decode': 3.1.0
   '@types/node': 18.7.18
   '@types/react': 18.0.20
   '@types/react-dom': 18.0.6
@@ -270,6 +278,10 @@ packages:
     dev: false
     optional: true
 
+  /@types/bcryptjs/2.4.2:
+    resolution: {integrity: sha512-LiMQ6EOPob/4yUL66SZzu6Yh77cbzJFYll+ZfaPiPPFswtIlA/Fs1MzdKYA7JApHU49zQTbJGX3PDmCpIdDBRQ==}
+    dev: true
+
   /@types/formidable/2.0.5:
     resolution: {integrity: sha512-uvMcdn/KK3maPOaVUAc3HEYbCEhjaGFwww4EsX6IJfWIJ1tzHtDHczuImH3GKdusPnAAmzB07St90uabZeCKPA==}
     dependencies:
@@ -288,6 +300,13 @@ packages:
     resolution: {integrity: sha512-272FMnFGzAVMGtu9tkr29hRL6bZj4Zs1KZNeHLnKqAvp06tAIcarTMwOh8/8bz4FmKRcMxZhZNeUAQsNLoiPhg==}
     dependencies:
       '@types/node': 18.7.18
+    dev: true
+
+  /@types/jwt-decode/3.1.0:
+    resolution: {integrity: sha512-tthwik7TKkou3mVnBnvVuHnHElbjtdbM63pdBCbZTirCt3WAdM73Y79mOri7+ljsS99ZVwUFZHLMxJuJnv/z1w==}
+    deprecated: This is a stub types definition. jwt-decode provides its own type definitions, so you do not need this installed.
+    dependencies:
+      jwt-decode: 3.1.2
     dev: true
 
   /@types/node/18.7.18:
@@ -580,6 +599,10 @@ packages:
 
   /base64-js/1.5.1:
     resolution: {integrity: sha512-AKpaYlHn8t4SVbOHCy+b5+KKgvR4vrsD8vbvrbiQJps7fKDTkjkDry6ji0rUJjC0kzbNePLwzxq8iypo41qeWA==}
+    dev: false
+
+  /bcryptjs/2.4.3:
+    resolution: {integrity: sha512-V/Hy/X9Vt7f3BbPJEi8BdVFMByHi+jNXrYkW3huaybV/kQ0KJg0Y6PkEMbn+zeT+i+SiKZ/HMqJGIIt4LZDqNQ==}
     dev: false
 
   /brace-expansion/1.1.11:
@@ -1852,6 +1875,9 @@ packages:
       jwa: 1.4.1
       safe-buffer: 5.2.1
     dev: false
+
+  /jwt-decode/3.1.2:
+    resolution: {integrity: sha512-UfpWE/VZn0iP50d8cz9NrZLM9lSWhcJ+0Gt/nm4by88UL+J1SiKN8/5dkjMmbEzwL2CAe+67GsegCbIKtbp75A==}
 
   /kareem/2.4.1:
     resolution: {integrity: sha512-aJ9opVoXroQUPfovYP5kaj2lM7Jn02Gw13bL0lg9v0V7SaUc0qavPs0Eue7d2DcC3NjqI6QAUElXNsuZSeM+EA==}

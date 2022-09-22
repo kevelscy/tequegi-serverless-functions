@@ -10,17 +10,21 @@
     "lint:eslint": "eslint ./src --fix"
   },
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "cloudinary": "^1.32.0",
     "formidable": "^2.0.1",
     "jsonwebtoken": "^8.5.1",
+    "jwt-decode": "^3.1.2",
     "mongoose": "^6.6.1",
     "next": "12.3.1",
     "react": "18.2.0",
     "react-dom": "18.2.0"
   },
   "devDependencies": {
+    "@types/bcryptjs": "^2.4.2",
     "@types/formidable": "^2.0.5",
     "@types/jsonwebtoken": "^8.5.9",
+    "@types/jwt-decode": "^3.1.0",
     "@types/node": "18.7.18",
     "@types/react": "18.0.20",
     "@types/react-dom": "18.0.6",
