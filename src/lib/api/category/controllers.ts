@@ -6,7 +6,6 @@ import { ProductModel } from 'lib/db/models/Product'
 
 export const getAllCategories = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
-    console.log('getAllCategories api')
     const categories = await CategoryModel.find().populate('products', 'title -_id')
     const categoriesNormalized = categories.map(category => normalizeCategoryProductsTitle(category.toJSON()))
 
@@ -34,7 +33,10 @@ export const getCategoryById = async (req: NextApiRequest, res: NextApiResponse)
       })
     }
 
-    const categoryFounded = await CategoryModel.findById(id).populate('products', 'title')
+    const categoryFounded = await CategoryModel.findById(id)
+    // const categoryFounded = await CategoryModel.findById(id).populate('products', 'title')
+
+    console.log('categoryFounded', categoryFounded)
 
     if (!categoryFounded) {
       return res.status(404).json({
@@ -109,14 +111,8 @@ export const createCategory = async (req: NextApiRequest, res: NextApiResponse) 
 
 export const updateCategory = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
-    const { id, title, description, published } = req.body
-
-    if (!id || !title || !description || !published === undefined) {
-      return res.status(422).json({
-        data: null,
-        error: 'ID_FIELD_MISSING'
-      })
-    }
+    const { id } = req.query
+    const { title, description, published } = req.body
 
     const categoryUpdated = await CategoryModel.findByIdAndUpdate(
       id,
@@ -128,14 +124,14 @@ export const updateCategory = async (req: NextApiRequest, res: NextApiResponse) 
       { new: true }
     ).populate('products', 'title')
 
-    const categoriesNormalized = normalizeCategoryProductsTitle(categoryUpdated.toJSON())
-
     if (!categoryUpdated) {
       return res.status(500).json({
         data: null,
         error: 'CATEGORY_UPDATED_ERROR'
       })
     }
+
+    const categoriesNormalized = normalizeCategoryProductsTitle(categoryUpdated.toJSON())
 
     return res.status(200).json({
       data: categoriesNormalized,

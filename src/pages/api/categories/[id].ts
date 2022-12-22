@@ -1,12 +1,12 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 
-import { getCategoryById, deleteCategoryById } from 'lib/api/category/controllers'
+import { getCategoryById, deleteCategoryById, updateCategory } from 'lib/api/category/controllers'
 import { verifyAdmin } from 'lib/utils/verifyAdmin'
 import { connectDB } from 'lib/db/connection'
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === 'GET' && req.query.id) return getCategoryById(req, res)
-
+  if (req.method === 'PUT' && req.query.id) return updateCategory(req, res)
   if (req.method === 'DELETE' && req.query.id && verifyAdmin(req, res)) return deleteCategoryById(req, res)
 
   if (req.method !== 'GET' && req.method !== 'DELETE') {

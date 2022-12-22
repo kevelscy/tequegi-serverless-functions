@@ -56,7 +56,7 @@ export const createProduct = async (req: NextApiRequest, res: NextApiResponse) =
           error: 'CREATE_PRODUCT_FORMIDABLE_PARSE'
         })
 
-        if (!fields.title || !fields.description || !files || !fields.price || fields.published === undefined) {
+        if (!fields.title || !fields.description || !fields.categoryId || !files || !fields.price || fields.published === undefined) {
           return res.status(422).json({
             data: null,
             error: 'FIELDS_MISSING'
@@ -104,24 +104,22 @@ export const createProduct = async (req: NextApiRequest, res: NextApiResponse) =
           })
         }
 
-        const categoryExists = await CategoryModel.exists({ title: fields.category })
+        const categoryUpdated: any = await CategoryModel.findByIdAndUpdate(
+          fields.categoryId,
+          { $push: { products: newProduct._id }
+        })
 
-        if (fields.category) {
-          const categoryFounded: any = await CategoryModel.updateOne(
-            { title: categoryExists ? fields.category : 'none' },
-            { $push: { products: newProduct._id }
-          })
-
-          if (categoryFounded) {
-            newProduct.category = categoryFounded._id
-          }
+        if (categoryUpdated) {
+          newProduct.category = categoryUpdated._id
         }
 
         const productPopulated = await (await newProduct.save())
           .populate('category', 'title -_id')
           .then((doc: any) => {
             const docObj = doc.toJSON()
-            docObj.category = doc.category.title
+            console.log('productPopulated doc', doc.category)
+
+            docObj.category = doc.category?.title
 
             return docObj
           })
@@ -139,7 +137,7 @@ export const createProduct = async (req: NextApiRequest, res: NextApiResponse) =
 
     const product = await promise
 
-    return res.status(200).json({
+    return res.status(201).json({
       data: product,
       error: null
     })
@@ -235,29 +233,31 @@ export const updateProduct = async (req: NextApiRequest, res: NextApiResponse) =
 
 export const deleteProductById = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
-    const { id, image, category } = req.body
+    const { id } = req.query
 
-    if (!id || !image || !category) {
-      return res.status(422).json({
+    const productDeleted = await ProductModel.findByIdAndDelete(id)
+
+    if (!productDeleted) {
+      return res.status(404).json({
         data: null,
-        error: 'FIELDS_MISSING'
+        error: 'PRODUCT_NOT_EXISTS'
       })
     }
 
-    const categoryUpdated: any = await CategoryModel.findOneAndUpdate(
-      { title: category },
-      { $pull: { products: id } },
+    const categoryUpdated = await CategoryModel.findByIdAndUpdate(
+      productDeleted.category,
+      { $pull: { products: productDeleted.id } },
       { new: true }
     )
 
     if (!categoryUpdated) {
-      return res.status(500).json({
+      return res.status(404).json({
         data: null,
-        error: 'CATEGORY_NOT_UPDATED'
+        error: 'CATEGORY_NOT_EXISTS'
       })
     }
 
-    cloudinary.uploader.destroy(image.publicId, (err, result) => {
+    cloudinary.uploader.destroy(productDeleted.image.publicId, (err, result) => {
       if (err) {
         return res.status(500).json({
           data: null,
@@ -267,15 +267,6 @@ export const deleteProductById = async (req: NextApiRequest, res: NextApiRespons
 
       console.log('cloudinary destroy - result', result)
     })
-
-    const productDeleted = await ProductModel.findByIdAndDelete(id)
-
-    if (!productDeleted) {
-      return res.status(500).json({
-        data: null,
-        error: 'PRODUCT_NOT_DELETED'
-      })
-    }
   
     return res.status(200).json({
       data: true,

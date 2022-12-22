@@ -10,6 +10,6 @@ export const connectDB = (handler: THandler) => async (req: NextApiRequest, res:
   }
 
   // Use new db connection
-  await mongoose.connect(process.env.DATABASE_URL)
+  await mongoose.connect(process.env.MONGODB_URI)
   return handler(req, res)
 }
